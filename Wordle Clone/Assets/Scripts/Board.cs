@@ -21,7 +21,7 @@ public class Board : MonoBehaviour
     private int colInd;
 
     //the answer
-    [SerializeField]private string correctWord;
+    private string correctWord;
 
     [SerializeField] private ParticleSystem confetti1, confetti2;
     [SerializeField] private APIHelper apiHelper;
@@ -234,7 +234,13 @@ public class Board : MonoBehaviour
 
     public void HintButton()
     {
+        hintButton.GetComponent<Button>().interactable = false;
         LeanTween.moveLocalX(answerText, 0, 0.5f);
-        LeanTween.moveLocalX(answerText, 202, 0.5f).setDelay(3f);
+        LeanTween.moveLocalX(answerText, 202, 0.5f).setDelay(3f).setOnComplete(ActivateHintButton);
+    }
+
+    private void ActivateHintButton()
+    {
+        hintButton.GetComponent<Button>().interactable = true;
     }
 }
