@@ -1,16 +1,46 @@
-using System.Net;
-using System.IO;
 using UnityEngine;
+using UnityEngine.Networking;
+using System.Collections;
+using System;
 
 public class APIHelper : MonoBehaviour
-{ 
-    public static Word GetNewWord()
+{
+    [Serializable]
+    public struct Word
     {
-        HttpWebRequest request = (HttpWebRequest)WebRequest.Create("https://asia-south1-dj-ui-dev.cloudfunctions.net/wordlewordV2");
-        HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-        StreamReader reader = new StreamReader(response.GetResponseStream());
-        string json = reader.ReadToEnd();
-        return JsonUtility.FromJson<Word>(json);
+        public string word;
     }
 
+    public Word word;
+
+    private void Awake()
+    {
+        StartCoroutine(GetWordCo());
+    }
+
+
+    public Word GetWord()
+    {
+        StartCoroutine(GetWordCo());
+        return word;
+    }
+
+    IEnumerator GetWordCo()
+    {
+        string url = "https://asia-south1-dj-ui-dev.cloudfunctions.net/wordlewordV2";
+        using(UnityWebRequest request = UnityWebRequest.Get(url))
+        {
+            yield return request.SendWebRequest();
+
+            if(request.result != UnityWebRequest.Result.Success)
+            {
+                Debug.Log("error");
+            }
+
+            else
+            {
+                word = JsonUtility.FromJson<Word>(request.downloadHandler.text);
+            }
+        }
+    }
 }

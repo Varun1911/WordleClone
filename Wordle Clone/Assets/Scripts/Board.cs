@@ -21,9 +21,10 @@ public class Board : MonoBehaviour
     private int colInd;
 
     //the answer
-    private string correctWord;
+    [SerializeField]private string correctWord;
 
     [SerializeField] private ParticleSystem confetti1, confetti2;
+    [SerializeField] private APIHelper apiHelper;
 
     [Header("States")]
     [SerializeField] private Tile.State emptyState;
@@ -194,7 +195,7 @@ public class Board : MonoBehaviour
 
     private void SetCorrectWord()
     {
-        correctWord = APIHelper.GetNewWord().word;
+        correctWord = apiHelper.GetWord().word;
         correctWord = correctWord.Trim();
         answerText.GetComponentInChildren<TextMeshProUGUI>().text = correctWord.Trim().ToUpper();
     }
