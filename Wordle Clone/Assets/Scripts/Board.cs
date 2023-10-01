@@ -1,4 +1,4 @@
-using System.Xml.Serialization;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -34,6 +34,7 @@ public class Board : MonoBehaviour
     [Header("UI")]
     [SerializeField] private Button newWordButton;
     [SerializeField] private Button tryAgainButton;
+    [SerializeField] private GameObject answerText;
 
 
     private void Awake()
@@ -67,7 +68,7 @@ public class Board : MonoBehaviour
         Row currRow = rows[rowInd];
         
         //backspace pressed
-        if(Input.GetKeyDown(KeyCode.Backspace))
+        if(Input.GetKeyDown(KeyCode.Backspace) || Input.GetKeyDown(KeyCode.Delete))
         {
             colInd = Mathf.Max(colInd - 1, 0);
             currRow.tiles[colInd].SetLetter('\0');
@@ -191,6 +192,7 @@ public class Board : MonoBehaviour
     {
         correctWord = APIHelper.GetNewWord().word;
         correctWord = correctWord.Trim();
+        answerText.GetComponentInChildren<TextMeshProUGUI>().text = correctWord.Trim().ToUpper();
     }
 
 
@@ -218,5 +220,12 @@ public class Board : MonoBehaviour
     {
         ClearBoard();
         enabled = true;
+    }
+
+    public void HintButton()
+    {
+        Debug.Log(correctWord);
+        LeanTween.moveLocalX(answerText, 0, 0.5f);
+        LeanTween.moveLocalX(answerText, 200, 0.5f).setDelay(3f);
     }
 }
