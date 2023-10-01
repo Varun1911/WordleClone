@@ -1,4 +1,3 @@
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class Board : MonoBehaviour
@@ -84,27 +83,53 @@ public class Board : MonoBehaviour
 
 
     private void SubmitRow(Row row)
-    {   
-        for(int i=0; i<row.tiles.Length; i++)
-        {
-            Tile tile = row.tiles[i];
+    {
+        //we need 2 for loops cause we need to handle the edge case where our guess has
+        //a letter 2 times or more but the correct word has it only once (or less number of times than the guess)
+        //example correctWord is belts and you guess bells
 
-            if(tile.letter == correctWord[i])
+        string alteredWord = correctWord;
+
+        for (int i = 0; i < row.tiles.Length; i++)
+        {
+            Tile currTile = row.tiles[i];
+
+            if (currTile.letter == correctWord[i])
             {
                 //correct state
-                tile.SetState(correctState);
+                currTile.SetState(correctState);
+                alteredWord = alteredWord.Remove(i, 1);
+                alteredWord = alteredWord.Insert(i, " ");
             }
 
-            else if (correctWord.Contains(tile.letter))
+            else if(!correctWord.Contains(currTile.letter))
             {
-                //wrong position
-                tile.SetState(wrongSpotState);
+                //incorrect state
+                currTile.SetState(incorrectState);
             }
+        }
 
-            else
+
+        for (int i = 0; i < row.tiles.Length; i++)
+        {
+            Tile currTile = row.tiles[i];
+
+            if(currTile.state != correctState && currTile.state != incorrectState)
             {
-                //incorrect
-                tile.SetState(incorrectState);
+                //wrong spot
+                if(alteredWord.Contains(currTile.letter))
+                {
+                    currTile.SetState(wrongSpotState);
+
+                    int letterCorrectIndex = alteredWord.IndexOf(currTile.letter);
+                    alteredWord = alteredWord.Remove(letterCorrectIndex, 1);
+                    alteredWord = alteredWord.Insert(letterCorrectIndex, " ");
+                }
+
+                else
+                {
+                    currTile.SetState(incorrectState);
+                }
             }
         }
 
@@ -116,6 +141,7 @@ public class Board : MonoBehaviour
             //gameover
             enabled = false;
         }
+
     }
 
 
