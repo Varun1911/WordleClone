@@ -1,4 +1,6 @@
+using System.Xml.Serialization;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Board : MonoBehaviour
 {
@@ -23,11 +25,15 @@ public class Board : MonoBehaviour
 
 
     [Header("States")]
-    public Tile.State emptyState;
-    public Tile.State filledState;
-    public Tile.State correctState;
-    public Tile.State wrongSpotState;
-    public Tile.State incorrectState;
+    [SerializeField] private Tile.State emptyState;
+    [SerializeField] private Tile.State filledState;
+    [SerializeField] private Tile.State correctState;
+    [SerializeField] private Tile.State wrongSpotState;
+    [SerializeField] private Tile.State incorrectState;
+
+    [Header("UI")]
+    [SerializeField] private Button newWordButton;
+    [SerializeField] private Button tryAgainButton;
 
 
     private void Awake()
@@ -41,6 +47,20 @@ public class Board : MonoBehaviour
         SetCorrectWord();
     }
 
+
+    private void OnEnable()
+    {
+        //hide buttons when game starts
+        newWordButton.gameObject.SetActive(false);
+        tryAgainButton.gameObject.SetActive(false);
+    }
+
+    private void OnDisable()
+    {
+        //show buttons when game ends
+        newWordButton.gameObject.SetActive(true);
+        tryAgainButton.gameObject.SetActive(true);
+    }
 
     private void Update()
     {
@@ -82,7 +102,7 @@ public class Board : MonoBehaviour
     }
 
 
-    private void SubmitRow(Row row)
+    private void SubmitRow(Row currRow)
     {
         //we need 2 for loops cause we need to handle the edge case where our guess has
         //a letter 2 times or more but the correct word has it only once (or less number of times than the guess)
@@ -90,9 +110,9 @@ public class Board : MonoBehaviour
 
         string alteredWord = correctWord;
 
-        for (int i = 0; i < row.tiles.Length; i++)
+        for (int i = 0; i < currRow.tiles.Length; i++)
         {
-            Tile currTile = row.tiles[i];
+            Tile currTile = currRow.tiles[i];
 
             if (currTile.letter == correctWord[i])
             {
@@ -110,9 +130,9 @@ public class Board : MonoBehaviour
         }
 
 
-        for (int i = 0; i < row.tiles.Length; i++)
+        for (int i = 0; i < currRow.tiles.Length; i++)
         {
-            Tile currTile = row.tiles[i];
+            Tile currTile = currRow.tiles[i];
 
             if(currTile.state != correctState && currTile.state != incorrectState)
             {
@@ -133,6 +153,13 @@ public class Board : MonoBehaviour
             }
         }
 
+
+        //check if the player guessed the correct word
+        if(HasWon(currRow))
+        {
+            enabled = false;
+        }
+
         rowInd++;
         colInd = 0;
 
@@ -145,9 +172,51 @@ public class Board : MonoBehaviour
     }
 
 
+    private void ClearBoard()
+    {
+        rowInd = 0; 
+        colInd = 0;
+
+        for(int i=0; i<rows.Length; i++)
+        {
+            for(int j=0; j < rows[i].tiles.Length; j++)
+            {
+                rows[i].tiles[j].SetLetter('\0');
+                rows[i].tiles[j].SetState(emptyState);
+            }
+        }
+    }
+
     private void SetCorrectWord()
     {
         correctWord = APIHelper.GetNewWord().word;
         correctWord = correctWord.Trim();
+    }
+
+
+    private bool HasWon(Row currRow)
+    {
+        for(int i=0; i<currRow.tiles.Length; i++)
+        {
+            if (currRow.tiles[i].state != correctState)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    public void NewGame()
+    {
+        SetCorrectWord();
+        ClearBoard();
+        enabled = true;
+    }
+
+    public void TryAgain()
+    {
+        ClearBoard();
+        enabled = true;
     }
 }
