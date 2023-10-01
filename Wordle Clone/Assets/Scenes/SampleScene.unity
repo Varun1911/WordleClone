@@ -587,6 +587,7 @@ GameObject:
   m_Component:
   - component: {fileID: 919745879}
   - component: {fileID: 919745880}
+  - component: {fileID: 919745881}
   m_Layer: 5
   m_Name: Board
   m_TagString: Untagged
@@ -644,6 +645,33 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &919745881
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 919745878}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 067ce260bb2197c4d8e4ad988d15e0c5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  emptyState:
+    fillColor: {r: 0.07058824, g: 0.07058824, b: 0.07450981, a: 1}
+    outlineColor: {r: 0.227451, g: 0.227451, b: 0.23529413, a: 1}
+  filledState:
+    fillColor: {r: 0.07058824, g: 0.07058824, b: 0.07450981, a: 1}
+    outlineColor: {r: 0.3372549, g: 0.34117648, b: 0.34509805, a: 1}
+  correctState:
+    fillColor: {r: 0.3254902, g: 0.5529412, b: 0.30588236, a: 1}
+    outlineColor: {r: 0.3254902, g: 0.5529412, b: 0.30588236, a: 1}
+  wrongSpotState:
+    fillColor: {r: 0.70980394, g: 0.62352943, b: 0.23137255, a: 1}
+    outlineColor: {r: 0.70980394, g: 0.62352943, b: 0.23137255, a: 1}
+  incorrectState:
+    fillColor: {r: 0.22745098, g: 0.22745098, b: 0.23529412, a: 1}
+    outlineColor: {r: 0.22745098, g: 0.22745098, b: 0.23529412, a: 1}
 --- !u!1001 &1608406341
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1024,6 +1052,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 919745879}
     m_Modifications:
+    - target: {fileID: 211172325413789982, guid: a7adf7e5783026d42954c3a8de85acaa, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 874178993356668849, guid: a7adf7e5783026d42954c3a8de85acaa, type: 3}
       propertyPath: m_Name
       value: ' Row 1'
@@ -1043,6 +1075,10 @@ PrefabInstance:
     - target: {fileID: 909676468573415620, guid: a7adf7e5783026d42954c3a8de85acaa, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1251924043602370212, guid: a7adf7e5783026d42954c3a8de85acaa, type: 3}
+      propertyPath: m_Enabled
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3874789024663668777, guid: a7adf7e5783026d42954c3a8de85acaa, type: 3}
       propertyPath: m_Pivot.x
@@ -1143,6 +1179,18 @@ PrefabInstance:
     - target: {fileID: 4544384894513592800, guid: a7adf7e5783026d42954c3a8de85acaa, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4743051182713639113, guid: a7adf7e5783026d42954c3a8de85acaa, type: 3}
+      propertyPath: m_fontStyle
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4743051182713639113, guid: a7adf7e5783026d42954c3a8de85acaa, type: 3}
+      propertyPath: m_enableAutoSizing
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4743051182713639113, guid: a7adf7e5783026d42954c3a8de85acaa, type: 3}
+      propertyPath: m_TextStyleHashCode
+      value: -1183493901
       objectReference: {fileID: 0}
     - target: {fileID: 5201880980870079337, guid: a7adf7e5783026d42954c3a8de85acaa, type: 3}
       propertyPath: m_AnchorMax.y
