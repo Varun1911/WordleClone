@@ -19,9 +19,11 @@ public class Tile : MonoBehaviour
     private TextMeshProUGUI textMeshPro;
     private Image tileImage;
     private Outline tileOutline;
+    private Animator animator;
 
     private void Awake()
     {
+        animator = GetComponent<Animator>();
         textMeshPro  = GetComponentInChildren<TextMeshProUGUI>();
         tileImage = GetComponent<Image>();
         tileOutline = GetComponent<Outline>();
@@ -32,8 +34,7 @@ public class Tile : MonoBehaviour
     {
         textMeshPro.text = letter.ToString().ToUpper();
         this.letter = letter;
-        //LeanTween.scale(rectTransform , new Vector2(rectTransform.rect.width, rectTransform.rect.height) * 1.2f, 0.2f);
-        //LeanTween.scale(rectTransform, new Vector2(rectTransform.rect.width, rectTransform.rect.height) / 1.2f, 0.2f).setDelay(0.2f);
+        animator.SetTrigger("TileFill");
     }
 
     

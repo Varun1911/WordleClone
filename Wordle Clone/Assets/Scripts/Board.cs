@@ -23,6 +23,7 @@ public class Board : MonoBehaviour
     //the answer
     private string correctWord;
 
+    [SerializeField] private ParticleSystem confetti1, confetti2;
 
     [Header("States")]
     [SerializeField] private Tile.State emptyState;
@@ -35,6 +36,7 @@ public class Board : MonoBehaviour
     [SerializeField] private Button newWordButton;
     [SerializeField] private Button tryAgainButton;
     [SerializeField] private GameObject answerText;
+    [SerializeField] private GameObject hintButton;
 
 
     private void Awake()
@@ -159,6 +161,8 @@ public class Board : MonoBehaviour
         if(HasWon(currRow))
         {
             enabled = false;
+            confetti1.Play();
+            confetti2.Play();
         }
 
         rowInd++;
@@ -214,18 +218,22 @@ public class Board : MonoBehaviour
         SetCorrectWord();
         ClearBoard();
         enabled = true;
+        confetti1.Stop();
+        confetti2.Stop();
+
     }
 
     public void TryAgain()
     {
         ClearBoard();
         enabled = true;
+        confetti1.Stop();
+        confetti2.Stop();
     }
 
     public void HintButton()
     {
-        Debug.Log(correctWord);
         LeanTween.moveLocalX(answerText, 0, 0.5f);
-        LeanTween.moveLocalX(answerText, 200, 0.5f).setDelay(3f);
+        LeanTween.moveLocalX(answerText, 202, 0.5f).setDelay(3f);
     }
 }
