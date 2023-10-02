@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -44,4 +45,5 @@ public class Tile : MonoBehaviour
         tileImage.color = state.fillColor;
         tileOutline.effectColor = state.outlineColor;
     }
+
 }

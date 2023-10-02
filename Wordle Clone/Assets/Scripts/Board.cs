@@ -112,6 +112,8 @@ public class Board : MonoBehaviour
         //a letter 2 times or more but the correct word has it only once (or less number of times than the guess)
         //example correctWord is belts and you guess bells
 
+
+        currRow.SubmitRowAnimation();
         string alteredWord = correctWord;
 
         for (int i = 0; i < currRow.tiles.Length; i++)
@@ -155,6 +157,7 @@ public class Board : MonoBehaviour
                     currTile.SetState(incorrectState);
                 }
             }
+
         }
 
 
