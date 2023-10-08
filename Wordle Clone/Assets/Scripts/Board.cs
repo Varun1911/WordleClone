@@ -79,17 +79,22 @@ public class Board : MonoBehaviour
         }
 
         //row already filled
-        else if (colInd >= currRow.tiles.Length)
+        else if (Input.GetKeyDown(KeyCode.Return))
         {
             //submit current guess
-            if(Input.GetKeyDown(KeyCode.Return))
+            if(colInd >= currRow.tiles.Length)
             {
                 SubmitRow(currRow);
+            }
+
+            else
+            {
+                currRow.NotEnoughLettersAnimation();
             }
         }
 
         //getting letters
-        else
+        else if (colInd < currRow.tiles.Length)
         {
             for(int i =0; i < SUPPORTED_KEYS.Length; i++)
             {
